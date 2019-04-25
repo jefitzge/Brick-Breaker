@@ -1,0 +1,70 @@
+﻿<Window x:Class="BouncingBall.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bouncing Ball" Height="500" Width="766"
+        Loaded="WindowLoaded"
+        KeyDown="KeypadDown" 
+        KeyUp="KeypadUp" 
+        Closing="OnClosing">
+    <Grid>
+        <Canvas Name="ScoreCanvas" Background="Beige" Height="100" Width="750" VerticalAlignment="Top">
+            <Label Content="Elapsed Time" Height="32" Width="85" Canvas.Left="10" Canvas.Top="37" Background="Purple" Foreground="White" />
+            <TextBox Height="32" Canvas.Left="114" TextWrapping="Wrap" Text="{Binding Path=ElapsedTimeBlock}" Canvas.Top="37" Width="57" Background="Purple" Foreground="White"/>
+            <Label Content="Score" Height="32" Width="50" Canvas.Left="205" Canvas.Top="37" Background="Purple" Foreground="White" />
+            <TextBox Height="32" Canvas.Left="274" TextWrapping="Wrap" Text="{Binding Path=ScoreBlock}" Canvas.Top="37" Width="94" Background="Purple" Foreground="White"/>
+            <Label Content="S to Start/Pause B to Replace Ball R to Reset Game E to Exit" Height="32" Width="339" Canvas.Left="401" Canvas.Top="37" Background="Purple" Foreground="White" />
+        </Canvas>
+        <Canvas 
+            Name="BallCanvas"
+            VerticalAlignment="Bottom"
+            Height="368" 
+            Width="750"
+            Background="Bisque">
+            <ItemsControl x:Name="BrickItems">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:Name="BrickTemplate">
+                        <Canvas>
+                            <Rectangle
+                            MouseLeftButtonDown="Button_Click"
+                            Fill="{Binding BrickFill}"
+                            Stroke="DarkRed"
+                            Height="{Binding BrickHeight}"
+                            Width="{Binding BrickWidth}"
+                            Canvas.Top="{Binding BrickCanvasTop}"
+                            Canvas.Left ="{Binding BrickCanvasLeft}"
+                            Visibility="{Binding BrickVisible}">
+                            </Rectangle>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- A WrapPanel ensures the items wrap to the next line -->
+                        <!-- when it runs out of room in the window dimensions -->
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <Ellipse 
+                Canvas.Top="{Binding ballCanvasTop}" 
+                Canvas.Left="{Binding ballCanvasLeft}"  
+                Width="{Binding BallWidth}" 
+                Height="{Binding BallHeight}">
+                <Ellipse.Fill>
+                    <RadialGradientBrush GradientOrigin="0.75,0.25">
+                        <GradientStop Color="Yellow" Offset="0.0" />
+                        <GradientStop Color="Orange" Offset="0.5" />
+                        <GradientStop Color="Red" Offset="1.0" />
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Rectangle
+                Canvas.Top ="{Binding paddleCanvasTop}"
+                Canvas.Left="{Binding paddleCanvasLeft}"
+                Fill="Black"
+                Height="{Binding paddleHeight}"
+                Width="{Binding paddleWidth}">
+            </Rectangle>
+        </Canvas>
+    </Grid>
+</Window>
